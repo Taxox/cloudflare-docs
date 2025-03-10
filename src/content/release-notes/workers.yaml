@@ -5,6 +5,10 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-03-03"
+    description: |-
+      - The new `queue_consumer_no_wait_for_wait_until` compatibility flag changes behaviour for queue consumers, changing their behavior such that (A) `waitUntil` promises do not need to complete before a queue consumer invocation can be considered complete, and (B) `waitUntil` promises failing do not cause the invocation as a whole to fail. Neither of these have been the case previously, allowing long-running or errant `waitUntil` tasks to (usually unintentionally) slow down or prevent successful message consumption.
+      - Updated Ada to v3.1.0.
   - publish_date: "2025-02-28"
     description: |-
       - Updated v8 to version 13.4.
