@@ -14,7 +14,7 @@ A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/
 
 ## Access storage
 
-By default, a <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip> leverages a key-value storage backend. New Durable Object classes can opt-in to using a [SQLite storage backend](/durable-objects/features/access-durable-objects-storage/#sqlite-storage-backend).
+By default, a <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip> leverages a SQLite storage backend.
 
 [Storage API methods](/durable-objects/api/storage-api/#methods) are available on `ctx.storage` parameter passed to the Durable Object constructor. Storage API has key-value APIs and SQL APIs. Only Durable Object classes with a SQLite storage backend can access SQL API.
 
@@ -50,11 +50,7 @@ However if you ever write using [Storage API](/durable-objects/api/storage-api/)
 
 ## SQLite storage backend
 
-:::note[SQLite in Durable Objects Beta]
-
-The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can opt-in to a SQLite storage backend in order to access new [SQL API](/durable-objects/api/sql-storage/#exec). Otherwise, a Durable Object class has a key-value storage backend.
-
-:::
+By default, Durable Objects use SQLite storage backend.
 
 To allow a new Durable Object class to use SQLite storage backend, use `new_sqlite_classes` on the migration in your Worker's Wrangler file:
 

@@ -284,6 +284,6 @@ new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 
 </WranglerConfig>
 
-For an example of a new class migration, refer to [Get started: Configure Durable Object class with SQLite storage backend](/durable-objects/get-started/tutorial-with-sql-api/#6-configure-durable-object-class-with-sqlite-storage-backend).
-
+:::caution
 You cannot enable a SQLite storage backend on an existing, deployed Durable Object class, so setting `new_sqlite_classes` on later migrations will fail with an error. Automatic migration of deployed classes from their key-value storage backend to SQLite storage backend will be available in the future.
+:::
