@@ -52,7 +52,7 @@ export class Counter extends DurableObject {
 ## Methods
 
 :::note[SQLite in Durable Objects]
-SQLite-backed Durable Objects can have a private, embedded SQLite database. When deploying a new Durable Object class, users can [use a SQLite storage backend](/durable-objects/features/access-durable-objects-storage/#sqlite-storage-backend) to access the [SQL API](/durable-objects/api/sql-storage/#exec).
+SQLite-backed Durable Objects can have a private, embedded SQLite database. When deploying a new Durable Object class, users can [use a SQLite storage backend](/durable-objects/features/access-sqlite-storage/#sqlite-storage-backend) to access the [SQL API](/durable-objects/api/sql-storage/#exec).
 
 Otherwise, a Durable Object class has a key-value storage backend.
 :::
@@ -60,7 +60,7 @@ Otherwise, a Durable Object class has a key-value storage backend.
 The Durable Object Storage API comes with several methods, including key-value (KV) API, SQL API, and point-in-time-recovery (PITR) API.
 
 - Durable Object classes with the default, key-value storage backend can use KV API.
-- Durable Object classes with the [SQLite storage backend](/durable-objects/features/access-durable-objects-storage/#sqlite-storage-backend) can use KV API, SQL API, and PITR API. KV API methods like `get()`, `put()`, `delete()`, or `list()` store data in a hidden SQLite table.
+- Durable Object classes with the [SQLite storage backend](/durable-objects/features/access-sqlite-storage/#sqlite-storage-backend) can use KV API, SQL API, and PITR API. KV API methods like `get()`, `put()`, `delete()`, or `list()` store data in a hidden SQLite table.
 
 Each method is implicitly wrapped inside a transaction, such that its results are atomic and isolated from all other storage operations, even when accessing multiple key-value pairs.
 
@@ -110,7 +110,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - <code>deleteAll(options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
 
-  - Deletes all stored data, effectively deallocating all storage used by the Durable Object. For Durable Objects with a key-value storage backend, `deleteAll()` removes all keys and associated values for an individual Durable Object. For Durable Objects with a [SQLite storage backend](/durable-objects/features/access-durable-objects-storage/#sqlite-storage-backend), `deleteAll()` removes the entire contents of a Durable Object's private SQLite database, including both SQL data and key-value data.
+  - Deletes all stored data, effectively deallocating all storage used by the Durable Object. For Durable Objects with a key-value storage backend, `deleteAll()` removes all keys and associated values for an individual Durable Object. For Durable Objects with a [SQLite storage backend](/durable-objects/features/access-sqlite-storage/#sqlite-storage-backend), `deleteAll()` removes the entire contents of a Durable Object's private SQLite database, including both SQL data and key-value data.
   - For Durable Objects with a key-value storage backend, an in-progress `deleteAll()` operation can fail, which may leave a subset of data undeleted. Durable Objects with a SQLite storage backend do not have a partial `deleteAll()` issue because `deleteAll()` operations are atomic (all or nothing).
   - `deleteAll()` does not proactively delete [Alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
 
@@ -203,13 +203,13 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` Object instead of on the top-level `ctx.storage` Object.<br/><br/>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` Object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
-  * When using [the SQLite-backed storage engine](/durable-objects/features/access-durable-objects-storage/#sqlite-storage-backend), the `txn` object is obsolete. Any storage operations performed directly on the `ctx.storage` object, including SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/sql-storage/#exec), will be considered part of the transaction.
+  * When using [the SQLite-backed storage engine](/durable-objects/features/access-sqlite-storage/#sqlite-storage-backend), the `txn` object is obsolete. Any storage operations performed directly on the `ctx.storage` object, including SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/sql-storage/#exec), will be considered part of the transaction.
 
 ### `transactionSync`
 
 - `transactionSync(callback)`: <Type text='any' />
 
-  - Only available when using [the SQLite-backed storage engine](/durable-objects/features/access-durable-objects-storage/#sqlite-storage-backend).
+  - Only available when using [the SQLite-backed storage engine](/durable-objects/features/access-sqlite-storage/#sqlite-storage-backend).
 
   - Invokes `callback()` wrapped in a transaction, and returns its result.
 

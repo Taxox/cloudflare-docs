@@ -401,7 +401,7 @@
 /durable-objects/api/websockets/ /durable-objects/features/websockets/ 301
 /durable-objects/best-practices/ /durable-objects/features/ 301
 /durable-objects/best-practices/create-durable-object-stubs-and-send-requests/ /durable-objects/features/create-durable-object-stubs-and-send-requests/ 301
-/durable-objects/best-practices/access-durable-objects-storage/ /durable-objects/features/access-durable-objects-storage/ 301
+/durable-objects/best-practices/access-durable-objects-storage/ /durable-objects/features/access-sqlite-storage/ 301
 /durable-objects/best-practices/error-handling/ /durable-objects/features/error-handling/ 301
 /durable-objects/best-practices/websockets/ /durable-objects/features/websockets/ 301
 /durable-objects/platform/data-location/ /durable-objects/reference/data-location/ 301
