@@ -243,9 +243,9 @@ export default function OfferingsTabs() {
 				</TabList>
 
 				{panels.map((Panel, idx) => (
-					<TabPanel>
+					<TabPanel key={idx}>
 						<div className="border">
-							<Panel key={idx} />
+							<Panel />
 						</div>
 					</TabPanel>
 				))}
