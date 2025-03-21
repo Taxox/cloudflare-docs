@@ -99,3 +99,22 @@ export default {
 
 ### Pass `env` as an argument to `fetch`
 
+```js
+export default {
+  async fetch(request, env) {
+    // Example of using the secret safely in an API request
+    let response = await fetch("https://api.example.com/data", {
+      headers: { "Authorization": `Bearer ${env.MY_SECRETS_STORE_SECRET}` },
+    });
+
+    if (!response.ok) {
+      return new Response("Failed to fetch data", { status: response.status });
+    }
+
+    let data = await response.json();
+    return new Response(JSON.stringify(data), {
+      headers: { "Content-Type": "application/json" },
+    });
+  },
+};
+```
