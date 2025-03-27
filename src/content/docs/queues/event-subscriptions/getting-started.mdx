@@ -64,5 +64,92 @@ We can verify that the event has been delivered by previewing the message. We'll
 Now, we know that our event subscription has been created, and that events are being delivered successfully to our queue.
 
 ## 3. Setup a consumer worker to consume the event
-Finally, we are going to setup a Consumer Worker to consume this event.
+Finally, we are going to setup a consumer [Worker](/workers/). If you have used queues before, these steps will look familiar to you. But if you've never used queues, continue to follow this tutorial.
 
+We're going to setup a new Worker, which will consume events from the queue we setup in step 1. A consumer Worker receives messages from your queue. When the consumer Worker receives your queue's messages, it can take actions, such as updating a database, sending you an email, or more.
+
+:::note
+
+Queues also supports [pull-based consumers](/queues/configuration/pull-consumers/), which allows any HTTP-based client to consume messages from a queue. This guide creates a push-based consumer using Cloudflare Workers.
+
+:::
+
+To create a consumer Worker, run:
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"consumer-worker"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Worker only",
+		lang: "TypeScript",
+	}}
+/>
+
+This will create a new directory, which will include both a `src/index.ts` Worker script, and a [`wrangler.jsonc`](/workers/wrangler/configuration/) configuration file.
+
+Move into the newly created directory:
+```sh
+cd consumer-worker
+```
+
+Now we're going to setup the queue handler. When messages are pushed from your queue to your consumer worker, it is done by invoking the queue handler. Open the `index.ts` file, and add the following `queue` handler to your existing `fetch` handler:
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		return new Response('Hello World!');
+	},
+	async queue(
+		batch: MessageBatch<EventMessageWorkflows>, env: Environment, ctx: ExecutionContext): Promise<void> {
+			let messages = JSON.stringify(batch.messages);
+			console.log(`consumed from our queue: ${messages}`);
+	}
+} satisfies ExportedHandler<Env>;
+```
+
+For the moment, this function will not do anything, as it is not connected to the queue.
+
+### Connect the consumer Worker to your queue
+After you have configured your consumer Worker, you are ready to connect it to your queue.
+
+Each queue can only have one consumer Worker connected to it. If you try to connect multiple consumers to the same queue, you will encounter an error when attempting to publish that Worker.
+
+To connect your queue to your consumer Worker, open your `wrangler.jsonc` file and add this to the bottom.
+```json
+...
+"queues": {
+		"consumers": [
+			{
+				"queue": "<MY-QUEUE-NAME>"
+			}
+		]
+	}
+...
+```
+
+Replace `MY-QUEUE-NAME` with the name of the queue you created in [step 1](/queues/event-subscriptions/getting-started#1-create-a-queue).
+
+### Publish your consumer worker
+With your Wrangler configuration and `index.ts` file configured, publish your consumer Worker by running:
+
+```sh
+npx wrangler deploy
+```
+
+## 4. Read events from the Queue
+After you set up consumer Worker, you can read messages from the queue.
+
+Run `wrangler tail` to start waiting for our consumer to log the messages it receives:
+
+```sh
+npx wrangler tail
+```
+
+TODO: trigger the workflow
+
+By completing this guide, you have now created a Queue, Workflow, an event subscription, and a consumer Worker which consumes the events.
