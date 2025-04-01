@@ -1668,28 +1668,23 @@
 
 # Workers AI reorganization redirects
 # Function calling
-/workers-ai/function-calling /workers-ai/tools/function-calling/ 301
-/workers-ai/function-calling/ /workers-ai/tools/function-calling/ 301
-/workers-ai/function-calling/embedded/ /workers-ai/tools/function-calling/embedded/ 301
-/workers-ai/function-calling/embedded/* /workers-ai/tools/function-calling/embedded/:splat 301
-/workers-ai/function-calling/traditional/ /workers-ai/tools/function-calling/traditional/ 301
-/workers-ai/function-calling/index/ /workers-ai/tools/function-calling/ 301
-/workers-ai/function-calling/* /workers-ai/tools/function-calling/:splat 301
+/workers-ai/function-calling /workers-ai/features/function-calling/ 301
+/workers-ai/function-calling/ /workers-ai/features/function-calling/ 301
+/workers-ai/function-calling/embedded/ /workers-ai/features/function-calling/embedded/ 301
+/workers-ai/function-calling/traditional/ /workers-ai/features/function-calling/traditional/ 301
+/workers-ai/function-calling/index/ /workers-ai/features/function-calling/ 301
 
 # JSON Mode
-/workers-ai/json-mode /workers-ai/tools/json-mode/ 301
-/workers-ai/json-mode/ /workers-ai/tools/json-mode/ 301
-/workers-ai/json-mode/* /workers-ai/tools/json-mode/:splat 301
+/workers-ai/json-mode /workers-ai/features/json-mode/ 301
+/workers-ai/json-mode/ /workers-ai/features/json-mode/ 301
 
 # Fine-tunes
-/workers-ai/fine-tunes /workers-ai/tools/fine-tunes/ 301
-/workers-ai/fine-tunes/ /workers-ai/tools/fine-tunes/ 301
-/workers-ai/fine-tunes/* /workers-ai/tools/fine-tunes/:splat 301
+/workers-ai/fine-tunes /workers-ai/features/fine-tunes/ 301
+/workers-ai/fine-tunes/ /workers-ai/features/fine-tunes/ 301
 
 # Prompting
-/workers-ai/guides/prompting /workers-ai/tools/prompting/ 301
-/workers-ai/guides/prompting/ /workers-ai/tools/prompting/ 301
-/workers-ai/guides/prompting/* /workers-ai/tools/prompting/:splat 301
+/workers-ai/guides/prompting /workers-ai/features/prompting/ 301
+/workers-ai/guides/prompting/ /workers-ai/features/prompting/ 301
 
 # Platform section
 /workers-ai/privacy /workers-ai/platform/privacy/ 301
@@ -1702,9 +1697,9 @@
 # Guides section
 /workers-ai/demos /workers-ai/guides/demos-architectures/ 301
 /workers-ai/demos/ /workers-ai/guides/demos-architectures/ 301
-/workers-ai/demos/* /workers-ai/guides/demos-architectures/:splat 301
 /workers-ai/tutorials /workers-ai/guides/tutorials/ 301
 /workers-ai/tutorials/ /workers-ai/guides/tutorials/ 301
+/workers-ai/demos/* /workers-ai/guides/demos-architectures/:splat 301
 /workers-ai/tutorials/* /workers-ai/guides/tutorials/:splat 301
 
 # workflows
