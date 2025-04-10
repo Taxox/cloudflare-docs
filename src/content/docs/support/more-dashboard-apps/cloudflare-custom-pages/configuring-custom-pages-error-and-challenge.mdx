@@ -108,15 +108,19 @@ After customizing your custom error page, there are two options for adding the p
 - Domain level: the custom error page will apply to only one domain associated with your account.
 
 :::note
-
 If Cloudflare cannot load your site or you have blocked the United States (US) via [IP Access rules](/waf/tools/ip-access-rules/) or WAF custom rules, publishing and previewing the error page will not work.
 
 A common error might look like the following: `Error fetching page: Fetch failed, https://example.com/ipcountryblock.html returned 403 (Code: 1202)`. Make sure that you are serving the custom error page with an `HTTP 200` status code, and that no WAF rule is blocking or challenging your custom error page.
-
 :::
 
 :::note
 When publishing the custom error page, the system will ignore query strings. This means that if the custom error page URL contains a query string the address published will remove `?` and anything after that (for example, `https://domain.com/5xx.html?removeimages` -> `https://domain.com/5xx.html`).
+:::
+
+:::note
+The custom error page is only accessed on the origin web server when previewing and publishing the page. 
+It is then stored on the Cloudflare edge, and served directly from Cloudlfare edge.
+No request is made to the origin web server when the custom error page is used.
 :::
 
 ### Account-level custom error page
