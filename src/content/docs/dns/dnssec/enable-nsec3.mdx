@@ -1,0 +1,26 @@
+---
+pcx_content_type: how-to
+title: Enable NSEC3
+description: Learn how to enable NSEC3 support with Cloudflare to meet compliance requirements.
+sidebar:
+  order: 6
+---
+
+As explained in [our blog](https://blog.cloudflare.com/black-lies/), Cloudflare's implementation of negative answers with NSEC is protected against zone walking[^1]. This implementation removes the need for NSEC3 and has been [proposed as an IETF standard](https://datatracker.ietf.org/doc/draft-ietf-dnsop-compact-denial-of-existence/).
+
+However, if you must use NSEC3 for compliance reasons, you can enable it as explained below.
+
+Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/methods/edit/), setting `status` to `active` and `dnssec_use_nsec3` to `true`. You should replace the values started by `$` with your zone ID and API token. To learn more about using the Cloudflare API, refer to [Fundamentals](/fundamentals/api/get-started/).
+
+```bash
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dnssec \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: application/json" \
+--data '{
+"dnssec_use_nsec3": true,
+"status": "active"
+}'
+```
+
+[^1]: A method where an attacker exploits NSEC negative answers to obtain all names in a given zone. This is possible when such negative answers provide information on the previous and next names in a chain.
