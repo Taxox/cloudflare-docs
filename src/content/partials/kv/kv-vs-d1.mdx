@@ -16,7 +16,7 @@ Cloudflare D1 provides a SQL database that supports relational data modeling and
 * Built-in [read replication](/d1/best-practices/read-replication/) enables you to automatically replicate data globally whilst still maintaining strong consistency.
 * D1 supports snapshot isolation consistency and is ideal for workloads that store user data or general web application data.
 
-### 
+### Use cases
 
 - Use Workers KV if you need to store and access configuration data that will be read by Workers frequently, is written infrequently (\<1 RPS per key) and can tolerate eventual consistency.
 - Use D1 if you need to store general application data, need SQL access to your data, and require strong consistency (writes are immediately visible after being committed).
