@@ -73,6 +73,11 @@ const message = await anthropic.messages.create({
 	product="ai-gateway"
 	params={{
 		name: "Anthropic",
-		prefix: "anthropic",
-	}}
+		jsonexample: `
+{
+	"model": "anthropic/{model}"
+}`
+
+    }}
+
 />

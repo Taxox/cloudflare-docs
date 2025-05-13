@@ -1,6 +1,10 @@
 ---
-{}
+params:
+  - name
+  - jsonexample
 ---
+
+import { Code } from "~/components";
 
 ## OpenAI-Compatible Endpoint
 
@@ -12,8 +16,4 @@ https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/compl
 
 Specify:
 
-```json
-{
-	"model": "{props.prefix}/{model}"
-}
-```
+<Code code={props.jsonexample} lang="json" />
