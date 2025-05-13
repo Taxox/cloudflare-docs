@@ -1,0 +1,19 @@
+---
+{}
+---
+
+## OpenAI-Compatible Endpoint
+
+You can also use the OpenAI-compatible endpoint (`/ai-gateway/chat-completion/`) to access {props.name} models using the OpenAI API schema. To do so, send your requests to:
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions
+```
+
+Specify:
+
+```json
+{
+	"model": "{props.prefix}/{model}"
+}
+```
