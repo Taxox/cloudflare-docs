@@ -43,6 +43,7 @@
 		"@iarna/toml": "2.2.5",
 		"@lottiefiles/dotlottie-react": "0.13.5",
 		"@marsidev/react-turnstile": "1.1.0",
+		"@microsoft/fetch-event-source": "2.0.1",
 		"@nanostores/react": "1.0.0",
 		"@octokit/webhooks-types": "7.6.1",
 		"@stoplight/json-schema-tree": "4.0.0",
