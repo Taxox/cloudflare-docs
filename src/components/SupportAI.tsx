@@ -41,35 +41,38 @@ export default function SupportAI() {
 
 		let chunkedAnswer = "";
 
-		await fetchEventSource("http://localhost:8010/proxy/devdocs/ask", {
-			method: "POST",
-			body: JSON.stringify({
-				question,
-				threadId,
-			}),
-			signal,
-			openWhenHidden: true,
-			onmessage(ev) {
-				if (ev.data === "[DONE]") {
-					controller.abort();
-				}
+		await fetchEventSource(
+			"https://support-ai.cloudflaresupport.workers.dev/devdocs/ask",
+			{
+				method: "POST",
+				body: JSON.stringify({
+					question,
+					threadId,
+				}),
+				signal,
+				openWhenHidden: true,
+				onmessage(ev) {
+					if (ev.data === "[DONE]") {
+						controller.abort();
+					}
 
-				const { threadId, response } = JSON.parse(ev.data);
+					const { threadId, response } = JSON.parse(ev.data);
 
-				if (threadId) {
-					setThreadId(threadId);
-				}
+					if (threadId) {
+						setThreadId(threadId);
+					}
 
-				if (!response) return;
+					if (!response) return;
 
-				chunkedAnswer += response;
-				setMessages((messages) => {
-					const newMessages = [...messages];
-					newMessages[newMessages.length - 1].content = chunkedAnswer;
-					return newMessages;
-				});
+					chunkedAnswer += response;
+					setMessages((messages) => {
+						const newMessages = [...messages];
+						newMessages[newMessages.length - 1].content = chunkedAnswer;
+						return newMessages;
+					});
+				},
 			},
-		});
+		);
 	}
 
 	return (
