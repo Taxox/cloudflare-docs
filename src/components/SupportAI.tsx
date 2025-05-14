@@ -12,7 +12,7 @@ function Messages({ messages }: { messages: Messages }) {
 				.map((message, index) => (
 					<div
 						key={index}
-						className={`w-fit max-w-3/4 rounded p-2 ${message.role === "user" ? "self-end bg-gray-700" : "self-start bg-orange-900"}`}
+						className={`w-fit max-w-3/4 rounded p-2 ${message.role === "user" ? "self-end bg-(--sl-color-bg-nav) text-black" : "bg-cl1-brand-orange text-cl1-black self-start"}`}
 					>
 						<Markdown>{message.content}</Markdown>
 					</div>
@@ -23,10 +23,9 @@ function Messages({ messages }: { messages: Messages }) {
 
 export default function SupportAI() {
 	const [threadId, setThreadId] = useState<string | undefined>();
-	const [messages, setMessages] = useState<Messages>([]);
-
 	const [question, setQuestion] = useState<string>("");
-	const [answer, setAnswer] = useState<string>("");
+
+	const [messages, setMessages] = useState<Messages>([]);
 
 	async function handleSubmit() {
 		setMessages((messages) => [
@@ -100,6 +99,7 @@ export default function SupportAI() {
 			<Messages messages={messages} />
 			<div className="flex items-center justify-center gap-4">
 				<input
+					className="w-full rounded p-2"
 					type="text"
 					placeholder="Ask a question..."
 					value={question}
@@ -115,7 +115,7 @@ export default function SupportAI() {
 			<div>
 				<strong>Debug:</strong>
 				<pre className="whitespace-pre-wrap">
-					{JSON.stringify({ threadId, messages, question, answer }, null, 2)}
+					{JSON.stringify({ threadId, messages, question }, null, 2)}
 				</pre>
 			</div>
 		</div>
