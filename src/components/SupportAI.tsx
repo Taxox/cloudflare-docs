@@ -51,6 +51,26 @@ export default function SupportAI() {
 				}),
 				signal,
 				openWhenHidden: true,
+				async onopen(response) {
+					if (!response.ok) {
+						throw new Error(response.status.toString());
+					}
+
+					return;
+				},
+				onerror(error) {
+					if (error instanceof Error) {
+						setMessages((messages) => [
+							...messages,
+							{
+								role: "assistant",
+								content:
+									"I'm unable to provide an answer to that at the moment. Please rephrase your query and I'll try again.",
+							},
+						]);
+						throw error;
+					}
+				},
 				onmessage(ev) {
 					if (ev.data === "[DONE]") {
 						controller.abort();
