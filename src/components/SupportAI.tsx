@@ -12,7 +12,7 @@ function Messages({ messages }: { messages: Messages }) {
 				.map((message, index) => (
 					<div
 						key={index}
-						className={`w-fit max-w-3/4 rounded p-2 ${message.role === "user" ? "self-end bg-(--sl-color-bg-nav) text-black" : "bg-cl1-brand-orange text-cl1-black self-start"}`}
+						className={`w-fit max-w-3/4 rounded p-4 ${message.role === "user" ? "bg-cl1-brand-orange text-cl1-black self-end" : "self-start bg-(--sl-color-bg-nav)"}`}
 					>
 						<Markdown>{message.content}</Markdown>
 					</div>
