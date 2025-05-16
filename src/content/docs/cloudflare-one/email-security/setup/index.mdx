@@ -72,6 +72,7 @@ Roles you may want to include in the impersonation registry are:
 - Finance roles
 - HR
 - IT help-desk
+- Legal
 
 You should review your impersonation registry on a quarterly basis as roles change.
 
@@ -107,7 +108,7 @@ Follow the below checklist to ensure your email environment is set up correctly:
 
 | Step                                                                                                    | Post-delivery | Pre-delivery |
 |---------------------------------------------------------------------------------------------------------|---------------|--------------|
-| Authorize integration ([Graph API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/#enable-microsoft-integration) or [Google Workspace](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/))                                                | Required      | Required [^1]     |
+| Authorize integration ([Graph API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/#enable-microsoft-integration) or [Google Workspace](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/))                                                | Required[^1]      | Required [^2]     |
 | Associate an integration with an MX/Inline domain                                                       |               | Required     |
 | Add/verify domains                                                                                      | Required      | Required     |
 | [Update MX records/connector](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/), then allow Cloudflare [egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/) on downstream mail server |               | Required     |
@@ -117,6 +118,7 @@ Follow the below checklist to ensure your email environment is set up correctly:
 | Configure [text add-ons](/cloudflare-one/email-security/detection-settings/configure-text-add-ons/) and [link actions](/cloudflare-one/email-security/detection-settings/configure-link-actions/)                                                                  |               | Required     |
 | Send a test email and verify it appears in **Monitoring** > [**Email activity**](/cloudflare-one/email-security/email-monitoring/#email-activity) with expected disposition        | Required      | Required     |
 
-[^1]: Still used for directory/auto‑move insight if desired as well as authorizing free API CASB.
+[^1]: Associating an integration with BCC/Journaling is required for post-delivery but not for pre-delivery.
+[^2]: Still used for directory/auto‑move insight if desired as well as authorizing free API CASB.
 
 Now that you know which deployment path to choose, you can begin your onboarding process.
