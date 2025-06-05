@@ -4,17 +4,13 @@ releaseNotes: >-
 
   **Changes and improvements**
 
-  - Fixed issue which sometimes results in WARP connection failing on mobile.
-  client should issue a get registration after a certain delay once we got the
-  rotate keys response back.
+  - Fixed a device registration issue causing WARP connection failures when changing networks.
 
-  - Captive portal improvements including showing connectivity status in the
-  client and sending system notifications for captive portal sign in
+  - Captive portal improvements including showing connectivity status in the client and sending system notifications for captive portal sign in.
 
   - The WARP client now applies post-quantum cryptography end-to-end on enabled devices accessing resources behind a Cloudflare Tunnel. This feature can be [enabled by MDM](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum).
 
-  - Improvement to gracefully handle changes made by MDM while WARP is not
-  running.
+  - Improvement to gracefully handle changes made by MDM while WARP is not running.
 
   - Fixed an issue affecting Split Tunnel Include mode, where traffic outside the tunnel was blocked when switching between Wi-Fi and ethernet networks.
 version: 2025.5.735.1
