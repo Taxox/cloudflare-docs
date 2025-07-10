@@ -6,8 +6,6 @@ sidebar:
 
 ---
 
-import { APIRequest } from "~/components";
-
 You can manage your Cloudflare Logpush service from the command line using cURL.
 
 Before getting started, review the following documentation:
@@ -24,13 +22,15 @@ The examples below are for zone-scoped datasets. Account-scoped datasets should 
 
 ## Step 1 - Get ownership challenge
 
-<APIRequest
-  path="/zones/{zone_id}/logpush/ownership"
-  method="POST"
-  json={{
-    destination_conf: "s3://<BUCKET_PATH>?region=us-west-2"
-  }}
-/>
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/ownership \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2"
+}'
+```
 
 ### Parameters
 
@@ -65,30 +65,22 @@ When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.
 
 ## Step 2 - Create a job
 
-<APIRequest
-  path="/zones/{zone_id}/logpush/jobs"
-  method="POST"
-  json={{
-    name: "<DOMAIN_NAME>",
-    destination_conf: "s3://<BUCKET_PATH>?region=us-west-2",
-    dataset: "http_requests",
-    output_options: {
-      field_names: [
-        "ClientIP",
-        "ClientRequestHost",
-        "ClientRequestMethod",
-        "ClientRequestURI",
-        "EdgeEndTimestamp",
-        "EdgeResponseBytes",
-        "EdgeResponseStatus",
-        "EdgeStartTimestamp",
-        "RayID"
-      ],
-      timestamp_format: "rfc3339"
-    },
-    ownership_challenge: "<OWNERSHIP_CHALLENGE_TOKEN>"
-  }}
-/>
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "<DOMAIN_NAME>",
+  "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
+  "dataset": "http_requests",
+  "output_options": {
+    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
+  },
+  "ownership_challenge": "<OWNERSHIP_CHALLENGE_TOKEN>"
+}'
+```
 
 ### Parameters
 
@@ -134,10 +126,11 @@ In the response, you get a newly-created job ID. For example:
 
 Start by retrieving information about a specific job, using a job ID:
 
-<APIRequest
-  path="/zones/{zone_id}/logpush/jobs/{job_id}"
-  method="GET"
-/>
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
+```
 
 ### Response
 
@@ -167,20 +160,24 @@ Note that by default a job is not enabled (`"enabled": false`).
 
 If you do not remember your job ID, you can retrieve it using your zone ID:
 
-<APIRequest
-  path="/zones/{zone_id}/logpush/jobs"
-  method="GET"
-/>
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
+```
 
 Next, to enable the job, send an update request:
 
-<APIRequest
-  path="/zones/{zone_id}/logpush/jobs/{job_id}"
-  method="PUT"
-  json={{
-    enabled: true
-  }}
-/>
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "enabled": true
+}'
+```
 
 ### Response
 
@@ -214,10 +211,11 @@ Once a job has been enabled and has started executing, the **last\_complete** fi
 
 ### Request to get job by ID and see **last\_complete** info
 
-<APIRequest
-  path="/zones/{zone_id}/logpush/jobs/{job_id}"
-  method="GET"
-/>
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
+```
 
 ### Response
 
@@ -245,10 +243,12 @@ Once a job has been enabled and has started executing, the **last\_complete** fi
 
 ## Optional - Delete a job
 
-<APIRequest
-  path="/zones/{zone_id}/logpush/jobs/{job_id}"
-  method="DELETE"
-/>
+```bash
+curl --request DELETE \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
+```
 
 Be careful when deleting a job because this action cannot be reversed.
 
@@ -267,10 +267,11 @@ Be careful when deleting a job because this action cannot be reversed.
 
 Retrieve a specific job, using the job ID:
 
-<APIRequest
-  path="/zones/{zone_id}/logpush/jobs/{job_id}"
-  method="GET"
-/>
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
+```
 
 ### Response
 
@@ -300,10 +301,11 @@ Retrieve a specific job, using the job ID:
 
 Retrieve all jobs for all datasets:
 
-<APIRequest
-  path="/zones/{zone_id}/logpush/jobs"
-  method="GET"
-/>
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
+```
 
 ### Response
 
@@ -347,10 +349,11 @@ Retrieve all jobs for all datasets:
 
 If you want to add (or remove) fields, change the timestamp format, or enable protection against the `Log4j - CVE-2021-44228` vulnerability, first retrieve the current **output\_options** for your zone.
 
-<APIRequest
-  path="/zones/{zone_id}/logpush/jobs/{job_id}"
-  method="GET"
-/>
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
+```
 
 ### Response
 
@@ -379,26 +382,19 @@ If you want to add (or remove) fields, change the timestamp format, or enable pr
 
 Next, edit the **output\_options** as desired and create a `PUT` request. The following example enables the **CVE-2021-44228** redaction option.
 
-<APIRequest
-  path="/zones/{zone_id}/logpush/jobs/{job_id}"
-  method="PUT"
-  json={{
-    output_options: {
-      field_names: [
-        "ClientIP",
-        "ClientRequestHost",
-        "ClientRequestMethod",
-        "ClientRequestURI",
-        "EdgeEndTimestamp",
-        "EdgeResponseBytes",
-        "EdgeResponseStatus",
-        "EdgeStartTimestamp",
-        "RayID"
-      ],
-      timestamp_format: "rfc3339"
-    }
-  }}
-/>
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "output_options": {
+    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
+  }
+}
+```
 
 Note that at this time, the **CVE-2021-44228** option is not available through the UI, and updating your Logpush job through the UI will remove this option.
 
